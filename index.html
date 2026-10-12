@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Market School - Financial Markets for FinTech. A clean, beginner-friendly guide covering 16 modules.">
+  <title>Market School — Financial Markets for FinTech</title>
+  
+  <!-- Tailwind CSS CDN for utility-first styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom CSS Design Tokens & Layout Rules -->
+  <style>
+    :root {
+      --ink: #17233b;
+      --muted: #61708a;
+      --paper: #f6f8fc;
+      --card: #ffffff;
+      --line: #e1e7f0;
+      --blue: #3458e8;
+      --teal: #14a58b;
+      --gold: #f4bd4f;
+      --purple: #7957d5;
+      --shadow: 0 12px 35px #1b31520d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* Container shell */
+    .shell {
+      max-width: 1240px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    /* Topbar Navigation */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #ffffffed;
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      font-size: 1.12rem;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 19px;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .navlinks a, .drop-toggle {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 650;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .navlinks a:hover, .drop-toggle:hover {
+      color: var(--blue);
+    }
+
+    /* Dropdown Menu styling for 16 Modules */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 280px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      z-index: 100;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 8px 12px;
+      color: var(--ink);
+      font-size: .88rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 62px 0 38px;
+      background: radial-gradient(ellipse at 85% 10%, #dce4ff 0, transparent 36%), radial-gradient(ellipse at 0 80%, #d8f5ed 0, transparent 32%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+      font-size: .76rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.4vw, 4.7rem);
+      line-height: 1.04;
+      letter-spacing: -.065em;
+      margin: 13px 0 20px;
+      max-width: 700px;
+    }
+
+    .hero h1 span {
+      color: var(--blue);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 750;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      background: var(--blue);
+      color: white;
+      box-shadow: 0 8px 20px #3458e833;
+    }
+
+    .btn.secondary {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    /* Hero Illustration Card */
+    .hero-art {
+      background: #fff;
+      border: 1px solid #e6eaf5;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transform: rotate(1deg);
+    }
+
+    .art-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    .pill {
+      background: #e5f8f2;
+      color: #087b67;
+      border-radius: 99px;
+      padding: 5px 10px;
+      font-size: .75rem;
+      font-weight: 800;
+    }
+
+    .chart {
+      width: 100%;
+      height: auto;
+      margin: 16px 0 4px;
+    }
+
+    .art-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      background: #f6f8fc;
+      border-radius: 13px;
+      padding: 12px;
+    }
+
+    .stat small {
+      display: block;
+      color: var(--muted);
+      font-size: .73rem;
+    }
+
+    .stat strong {
+      font-size: 1.1rem;
+    }
+
+    /* Sections & Overview */
+    .section {
+      padding: 46px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section h2 {
+      font-size: clamp(1.7rem, 3vw, 2.45rem);
+      line-height: 1.15;
+      letter-spacing: -.045em;
+      margin: 6px 0;
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .overview-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 21px;
+      box-shadow: var(--shadow);
+    }
+
+    .overview-card .emoji {
+      font-size: 1.65rem;
+    }
+
+    .overview-card h3 {
+      margin: 10px 0 4px;
+      font-size: 1.06rem;
+    }
+
+    .overview-card p {
+      color: var(--muted);
+      font-size: .93rem;
+      margin: 0;
+    }
+
+    /* Modules Grid Showcase */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .module-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .module-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--blue);
+    }
+
+    .module-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .module-num {
+      background: #edf1ff;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: .8rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .module-stage {
+      font-size: .75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
+    }
+
+    .module-card h3 {
+      font-size: 1.05rem;
+      margin: 0 0 8px;
+      letter-spacing: -.02em;
+    }
+
+    .module-card p {
+      font-size: .88rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--ink);
+      color: white;
+      padding: 35px 0;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer p {
+      color: #bdc8de;
+      margin: 5px 0;
+    }
+
+    .smallprint {
+      font-size: .82rem;
+      color: #7c879c;
+      max-width: 740px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .overview {
+        grid-template-columns: 1fr;
+      }
+      .navlinks {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html">
+        <span class="logo">↗</span> Market School
+      </a>
+      
+      <!-- Desktop & Tablet Navigation Links -->
+      <nav class="navlinks" id="navlinks">
+        <a href="#path">Learning Path</a>
+        
+        <!-- Modules Dropdown Menu (Lists all 16 modules for easy access) -->
+        <div class="dropdown" id="modulesDropdown">
+          <button class="drop-toggle" id="dropToggle" aria-expanded="false">
+            Modules (16) ▾
+          </button>
+          <div class="dropdown-content">
+            <a href="module-1.html">1. Money, Interest & Time Value</a>
+            <a href="module-2.html">2. Banks & Central Banking</a>
+            <a href="module-3.html">3. Market Structure & Trading</a>
+            <a href="module-4.html">4. Equity Markets & Stocks</a>
+            <a href="module-5.html">5. Fixed Income & Bonds</a>
+            <a href="module-6.html">6. Foreign Exchange (Forex)</a>
+            <a href="module-7.html">7. Commodities & Energy</a>
+            <a href="module-8.html">8. Derivatives & Options</a>
+            <a href="module-9.html">9. Portfolio Theory</a>
+            <a href="module-10.html">10. Company Valuation</a>
+            <a href="module-11.html">11. Behavioral Finance</a>
+            <a href="module-12.html">12. Digital Payments & FinTech</a>
+            <a href="module-13.html">13. Blockchain & Web3</a>
+            <a href="module-14.html">14. Decentralized Finance (DeFi)</a>
+            <a href="module-15.html">15. Market Data & APIs</a>
+            <a href="module-16.html">16. Algorithmic Trading</a>
+          </div>
+        </div>
+        
+        <a href="#all-modules">Course Directory</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <div class="eyebrow">MSc FinTech · Beginner Friendly</div>
+          <h1>Financial markets,<br><span>made simple.</span></h1>
+          <p>Go from “What is a stock?” to understanding how markets, money, and financial technology fit together across 16 comprehensive modules.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="module-1.html">Start Module 1 <span>→</span></a>
+            <a class="btn secondary" href="#all-modules">Browse All 16 Modules ↗</a>
+          </div>
+          <p style="font-size:.84rem;margin-top:16px">16 complete modules · Interactive formulas · No finance background needed</p>
+        </div>
+        
+        <!-- Decorative Art Card with Market Chart Illustration -->
+        <div class="hero-art">
+          <div class="art-head">
+            <span>Your learning journey</span>
+            <span class="pill">16 Modules Ready</span>
+          </div>
+          <svg class="chart" viewBox="0 0 500 220" role="img" aria-label="Market chart illustration">
+            <defs>
+              <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3458e8" stop-opacity=".25"/>
+                <stop offset="1" stop-color="#3458e8" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="#e8edf6" stroke-width="1">
+              <path d="M15 35H485M15 80H485M15 125H485M15 170H485"/>
+            </g>
+            <path d="M15 178 L55 145 L90 158 L128 105 L165 128 L200 87 L235 104 L275 55 L310 82 L350 43 L388 65 L430 28 L485 44 L485 205 L15 205Z" fill="url(#fill)"/>
+            <path d="M15 178 L55 145 L90 158 L128 105 L165 128 L200 87 L235 104 L275 55 L310 82 L350 43 L388 65 L430 28 L485 44" fill="none" stroke="#3458e8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="430" cy="28" r="6" fill="#14a58b" stroke="white" stroke-width="3"/>
+          </svg>
+          <div class="art-stats">
+            <div class="stat"><small>Foundations</small><strong>Modules 1-5</strong></div>
+            <div class="stat"><small>Core Markets</small><strong>Modules 6-11</strong></div>
+            <div class="stat"><small>FinTech & Future</small><strong>Modules 12-16</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="path">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">A clear path</div>
+            <h2>Small steps. Big picture.</h2>
+            <p class="sub">Master core concepts with plain-English definitions and real-world scenarios.</p>
+          </div>
+        </div>
+        <div class="overview">
+          <article class="overview-card">
+            <div class="emoji">🧱</div>
+            <h3>1. Foundations (1-5)</h3>
+            <p>Money, interest rates, time value of money, central banking, and macroeconomic indicators.</p>
+          </article>
+          <article class="overview-card">
+            <div class="emoji">📈</div>
+            <h3>2. Core Markets (6-11)</h3>
+            <p>Equity exchanges, fixed income bonds, foreign exchange, derivatives, and portfolio management.</p>
+          </article>
+          <article class="overview-card">
+            <div class="emoji">🤖</div>
+            <h3>3. FinTech & Future (12-16)</h3>
+            <p>Digital payments, blockchain, decentralised finance (DeFi), market data, and algorithmic trading.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="all-modules" style="padding-top:10px">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Course Directory</div>
+            <h2>Explore All 16 Modules</h2>
+            <p class="sub">Click any module card below to open its dedicated page.</p>
+          </div>
+        </div>
+        
+        <div class="modules-grid" id="modulesGrid">
+          <!-- Module 1 -->
+          <a href="module-1.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">01</span>
+                <span class="module-stage">Foundation</span>
+              </div>
+              <h3>Money, Interest & Time Value</h3>
+              <p>Learn present value, future value, compound interest, and inflation mechanics.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 2 -->
+          <a href="module-2.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">02</span>
+                <span class="module-stage">Foundation</span>
+              </div>
+              <h3>Banks & Central Banking</h3>
+              <p>Understand monetary policy, interest rate levers, and central bank regulations.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 3 -->
+          <a href="module-3.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">03</span>
+                <span class="module-stage">Foundation</span>
+              </div>
+              <h3>Market Structure & Trading</h3>
+              <p>Explore limit orders, market orders, bid-ask spreads, and exchange clearing.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 4 -->
+          <a href="module-4.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">04</span>
+                <span class="module-stage">Foundation</span>
+              </div>
+              <h3>Equity Markets & Stocks</h3>
+              <p>Discover IPOs, market capitalization, dividends, and stock indices.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 5 -->
+          <a href="module-5.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">05</span>
+                <span class="module-stage">Foundation</span>
+              </div>
+              <h3>Fixed Income & Bonds</h3>
+              <p>Master coupon rates, yields to maturity, and the inverse bond price rule.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 6 -->
+          <a href="module-6.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">06</span>
+                <span class="module-stage">Core Markets</span>
+              </div>
+              <h3>Foreign Exchange (Forex)</h3>
+              <p>Examine currency pairs, spot rates, forward contracts, and international hedging.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 7 -->
+          <a href="module-7.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">07</span>
+                <span class="module-stage">Core Markets</span>
+              </div>
+              <h3>Commodities & Energy</h3>
+              <p>Learn how hard and soft commodities and energy futures are traded globally.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 8 -->
+          <a href="module-8.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">08</span>
+                <span class="module-stage">Core Markets</span>
+              </div>
+              <h3>Derivatives & Options</h3>
+              <p>Understand call options, put options, strike prices, and risk management.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 9 -->
+          <a href="module-9.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">09</span>
+                <span class="module-stage">Core Markets</span>
+              </div>
+              <h3>Portfolio Theory & Allocation</h3>
+              <p>Explore diversification, asset allocation, correlation, and risk-adjusted returns.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 10 -->
+          <a href="module-10.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">10</span>
+                <span class="module-stage">Core Markets</span>
+              </div>
+              <h3>Company Valuation</h3>
+              <p>Analyze balance sheets, income statements, EBITDA, and DCF models.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 11 -->
+          <a href="module-11.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">11</span>
+                <span class="module-stage">Core Markets</span>
+              </div>
+              <h3>Behavioral Finance</h3>
+              <p>Uncover market efficiency (EMH), loss aversion, and psychological investor biases.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 12 -->
+          <a href="module-12.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">12</span>
+                <span class="module-stage">FinTech & Future</span>
+              </div>
+              <h3>Digital Payments & FinTech</h3>
+              <p>Study payment gateways, APIs, tokenization, and real-time payment rails.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 13 -->
+          <a href="module-13.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">13</span>
+                <span class="module-stage">FinTech & Future</span>
+              </div>
+              <h3>Blockchain & Web3</h3>
+              <p>Discover cryptographic ledgers, consensus mechanisms, and smart contracts.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 14 -->
+          <a href="module-14.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">14</span>
+                <span class="module-stage">FinTech & Future</span>
+              </div>
+              <h3>Decentralized Finance (DeFi)</h3>
+              <p>Learn about liquidity pools, automated market makers (AMMs), and lending protocols.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 15 -->
+          <a href="module-15.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">15</span>
+                <span class="module-stage">FinTech & Future</span>
+              </div>
+              <h3>Market Data & APIs</h3>
+              <p>Examine WebSocket streaming, REST data feeds, and alternative datasets.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+
+          <!-- Module 16 -->
+          <a href="module-16.html" class="module-card">
+            <div>
+              <div class="module-card-top">
+                <span class="module-num">16</span>
+                <span class="module-stage">FinTech & Future</span>
+              </div>
+              <h3>Algorithmic Trading</h3>
+              <p>Explore high-frequency trading (HFT), arbitrage bots, and robo-advisors.</p>
+            </div>
+            <span style="font-size:.85rem;color:var(--blue);font-weight:700;margin-top:14px">Open module →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="shell">
+        <p class="smallprint">Learning note: examples are simplified for education, not current market quotes or personal investment advice. Prices and outcomes can change, and investments can lose value.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <div>
+        <div class="brand" style="color:white"><span class="logo" style="background:#3458e8">↗</span> Market School</div>
+        <p>Understand the money moving around you.</p>
+      </div>
+      <div>
+        <strong>Keep going, one idea at a time.</strong>
+        <p>Made for curious beginners · Financial Markets for FinTech · 16 Complete Modules</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Dropdown Interaction & Maintenance -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdown = document.getElementById('modulesDropdown');
+      const toggleBtn = document.getElementById('dropToggle');
+
+      // Toggle dropdown menu open/closed on click
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('active');
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        if (dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

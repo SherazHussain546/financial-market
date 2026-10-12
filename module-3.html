@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Module 3: Banks, Central Banks & The Economy - Market School FinTech Guide">
+  <title>Module 2: Banks, Central Banks & The Economy — Market School</title>
+  
+  <!-- Tailwind CSS CDN for utility-first responsive styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Design Tokens matching Market School theme -->
+  <style>
+    :root {
+      --ink: #17233b;
+      --muted: #61708a;
+      --paper: #f6f8fc;
+      --card: #ffffff;
+      --line: #e1e7f0;
+      --blue: #3458e8;
+      --teal: #14a58b;
+      --gold: #f4bd4f;
+      --purple: #7957d5;
+      --shadow: 0 12px 35px #1b31520d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* Container shell for responsive centering */
+    .shell {
+      max-width: 1140px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    /* Topbar Navigation */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #ffffffed;
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      font-size: 1.12rem;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 19px;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .navlinks a, .drop-toggle {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 650;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .navlinks a:hover, .drop-toggle:hover {
+      color: var(--blue);
+    }
+
+    /* Dropdown Menu for 16 Modules */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 280px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      z-index: 100;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 8px 12px;
+      color: var(--ink);
+      font-size: .88rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Module Header Hero */
+    .module-hero {
+      background: radial-gradient(ellipse at 85% 10%, #dce4ff 0, transparent 36%), radial-gradient(ellipse at 0 80%, #d8f5ed 0, transparent 32%);
+      padding: 50px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* Content Layout Styling */
+    .content-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 36px;
+      padding: 40px 0;
+    }
+
+    /* Sidebar Table of Contents */
+    .toc {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc h4 {
+      margin: 0 0 12px;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      display: block;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    .toc a:hover, .toc a.active {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Article Main Body */
+    .article-body {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .article-body h2 {
+      font-size: 1.8rem;
+      letter-spacing: -.03em;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .article-body h3 {
+      font-size: 1.25rem;
+      margin-top: 24px;
+      color: var(--ink);
+    }
+
+    .article-body p {
+      color: #3b475e;
+      line-height: 1.7;
+    }
+
+    /* Callout & Interactive Cards */
+    .callout {
+      background: #f6f8fc;
+      border-left: 4px solid var(--blue);
+      padding: 18px 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+    }
+
+    .formula-box {
+      background: #17233b;
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin: 24px 0;
+    }
+
+    .formula-box code {
+      background: #253556;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #79f7d5;
+    }
+
+    /* Interactive Calculator Styling */
+    .calc-card {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .calc-input {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .calc-input label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .calc-input input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .calc-result {
+      background: #edf0ff;
+      border-radius: 10px;
+      padding: 14px;
+      font-weight: 700;
+      color: var(--blue);
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Quiz Styling */
+    .quiz-container {
+      background: #fdfefe;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 30px;
+    }
+
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-weight: 600;
+      transition: all .2s;
+      cursor: pointer;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--blue);
+      background: #f6f8fc;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .content-layout {
+        grid-template-columns: 1fr;
+      }
+      .toc {
+        display: none;
+      }
+      .calc-input {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar with 16 Modules Dropdown -->
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html">
+        <span class="logo">↗</span> Market School
+      </a>
+      
+      <nav class="navlinks" id="navlinks">
+        <a href="index.html">Home</a>
+        
+        <!-- Modules Dropdown Menu -->
+        <div class="dropdown" id="modulesDropdown">
+          <button class="drop-toggle" id="dropToggle" aria-expanded="false">
+            Modules (16) ▾
+          </button>
+          <div class="dropdown-content">
+            <a href="module-1.html">1. Money, Interest & Time Value</a>
+            <a href="module-2.html">2. Money, Interest & Time Value (Advanced)</a>
+            <a href="module-3.html">3. Banks, Central Banks & Economy</a>
+            <a href="module-4.html">4. Market Structure & Trading</a>
+            <a href="module-5.html">5. Equity Markets & Stocks</a>
+            <a href="module-6.html">6. Fixed Income & Bonds</a>
+            <a href="module-7.html">7. Foreign Exchange (Forex)</a>
+            <a href="module-8.html">8. Commodities & Energy</a>
+            <a href="module-9.html">9. Derivatives & Options</a>
+            <a href="module-10.html">10. Portfolio Theory</a>
+            <a href="module-11.html">11. Company Valuation</a>
+            <a href="module-12.html">12. Behavioral Finance</a>
+            <a href="module-13.html">13. Digital Payments & FinTech</a>
+            <a href="module-14.html">14. Blockchain & Web3</a>
+            <a href="module-15.html">15. Market Data & APIs</a>
+            <a href="module-16.html">16. Algorithmic Trading</a>
+          </div>
+        </div>
+        
+        <a href="index.html#all-modules">Course Directory</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header Section -->
+  <section class="module-hero">
+    <div class="shell">
+      <div style="color:var(--blue);text-transform:uppercase;font-weight:800;font-size:.78rem;letter-spacing:.12em;">Module 3 · Macroeconomics & Banking</div>
+      <h1 style="font-size:clamp(2rem, 4vw, 3.2rem);margin:10px 0;letter-spacing:-.04em;">Banks, Central Banks & The Economy</h1>
+      <p style="font-size:1.08rem;color:var(--muted);max-width:700px;margin:0;">How do commercial banks create money out of thin air? What happens when Central Banks raise interest rates, and how does gross domestic product (GDP) measure economic heartbeat?</p>
+    </div>
+  </section>
+
+  <!-- Main Content Layout with Sidebar TOC and Article Body -->
+  <div class="shell">
+    <div class="content-layout">
+      
+      <!-- Sidebar Table of Contents -->
+      <aside class="toc">
+        <h4>Table of Contents</h4>
+        <ul>
+          <li><a href="#why-banks" class="toc-link">1. Why Banks Matter</a></li>
+          <li><a href="#vocab" class="toc-link">2. Key Vocabulary</a></li>
+          <li><a href="#commercial-banks" class="toc-link">3. Fractional Reserve Banking</a></li>
+          <li><a href="#money-multiplier" class="toc-link">4. The Money Multiplier</a></li>
+          <li><a href="#central-banks" class="toc-link">5. Central Banks & Mandates</a></li>
+          <li><a href="#monetary-policy" class="toc-link">6. Monetary Policy Tools</a></li>
+          <li><a href="#economy-gdp" class="toc-link">7. Macro & GDP Equation</a></li>
+          <li><a href="#real-life-transmission" class="toc-link">8. Rate Hikes & Mortgages</a></li>
+          <li><a href="#quiz" class="toc-link">9. Module Quiz</a></li>
+        </ul>
+      </aside>
+
+      <!-- Article Content -->
+      <main class="article-body">
+        
+        <section id="why-banks">
+          <h2>1. Why Banks & Central Banks Matter</h2>
+          <p>Imagine living in a world where every time you wanted to buy a car or house, you had to find someone with a trunk full of cash who trusted you personally. Commerce would grind to a halt. <strong>Commercial banks</strong> solve this by taking deposits from millions of savers and lending them out to entrepreneurs, homebuyers, and corporations.</p>
+          <p>Above commercial banks sits the <strong>Central Bank</strong> (such as the Federal Reserve in the U.S., the European Central Bank, or the Bank of England)—the ultimate guardian of the monetary system, lender of last resort, and conductor of the economic orchestra.</p>
+          <div class="callout">
+            <strong>The Big Picture:</strong> While commercial banks handle daily checking accounts and local loans, Central Banks set the baseline interest rates that determine whether the entire economy speeds up or slows down.
+          </div>
+        </section>
+
+        <section id="vocab">
+          <h2>2. Key Vocabulary Glossary</h2>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:.92rem;">
+              <thead>
+                <tr style="background:#f6f8fc;text-align:left;border-bottom:2px solid var(--line);">
+                  <th style="padding:12px;">Term</th>
+                  <th style="padding:12px;">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Commercial Bank</td>
+                  <td style="padding:12px;color:var(--muted);">A financial institution that accepts deposits, offers checking accounts, and makes consumer/business loans.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Central Bank</td>
+                  <td style="padding:12px;color:var(--muted);">The supreme national authority that regulates monetary policy, issues currency, and supervises banks.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Fractional Reserve Banking</td>
+                  <td style="padding:12px;color:var(--muted);">A system where banks keep only a fraction of deposits on hand and lend out the rest.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Reserve Requirement Ratio (RRR)</td>
+                  <td style="padding:12px;color:var(--muted);">The percentage of deposits that banks are legally mandated to hold in cash, not lend out.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Money Multiplier</td>
+                  <td style="padding:12px;color:var(--muted);">The amount of money the banking system creates from each dollar of reserves ($1 / \text{RRR}$).</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Monetary Policy</td>
+                  <td style="padding:12px;color:var(--muted);">Actions taken by a central bank to influence money supply and interest rates.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Quantitative Easing (QE)</td>
+                  <td style="padding:12px;color:var(--muted);">An unorthodox monetary policy where a central bank buys government bonds to inject cash into the economy.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Gross Domestic Product (GDP)</td>
+                  <td style="padding:12px;color:var(--muted);">The total monetary value of all finished goods and services produced within a country in a specific time period.</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;font-weight:700;">Lender of Last Resort</td>
+                  <td style="padding:12px;color:var(--muted);">The central bank's role in providing emergency loans to solvent banks facing sudden liquidity crunches.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="commercial-banks">
+          <h2>3. Fractional Reserve Banking: How Banks Create Money</h2>
+          <p>Many people believe banks only lend out the exact cash depositors leave with them. In reality, modern economies operate on <strong>fractional reserve banking</strong>.</p>
+          <p>When you deposit $1,000 into Bank A, if the reserve requirement is 10%, the bank must keep $100 in its vault (or at the central bank) and is allowed to lend out the remaining $900 to a local bakery. That $900 is used by the bakery to buy ovens, and the oven seller deposits that $900 into Bank B. Bank B keeps 10% ($90) and lends out $810. This loop repeats across the financial system!</p>
+        </section>
+
+        <section id="money-multiplier">
+          <h2>4. The Money Multiplier Formula & Calculator</h2>
+          <p>Because of this lending chain, a single initial deposit generates an expansion in the total money supply. Economists measure this using the <strong>Money Multiplier</strong> formula:</p>
+          
+          <div class="formula-box">
+            <h4 style="margin:0 0 10px;color:white;font-size:1rem;">Money Multiplier Formula</h4>
+            <code>Total Money Supply Expansion = Initial Deposit × (1 / Reserve Requirement Ratio)</code>
+            <p style="margin:12px 0 0;font-size:.9rem;color:#bdc8de;">For example, if RRR is 10% (0.10), the multiplier is 1 / 0.10 = 10.</p>
+          </div>
+
+          <!-- Interactive Calculator for Money Multiplier -->
+          <div class="calc-card">
+            <h4 style="margin:0 0 14px;">Interactive Money Multiplier & Deposit Expansion Calculator</h4>
+            <div class="calc-input">
+              <div>
+                <label>Initial Deposit ($)</label>
+                <input type="number" id="initialDeposit" value="10000" oninput="calculateMultiplier()">
+              </div>
+              <div>
+                <label>Reserve Requirement Ratio (%)</label>
+                <input type="number" id="rrr" value="10" step="0.5" oninput="calculateMultiplier()">
+              </div>
+            </div>
+            <div class="calc-result" id="multiplierResult">
+              Total Money Created: $100,000.00 (Multiplier: 10.0x)
+            </div>
+          </div>
+        </section>
+
+        <section id="central-banks">
+          <h2>5. Central Banks: The Economic Conductor</h2>
+          <p>While commercial banks care about profit, Central Banks care about <strong>macroeconomic stability</strong>. Their core mandates typically include:</p>
+          <ul>
+            <li><strong>Price Stability:</strong> Controlling inflation (usually targeting around 2% per year).</li>
+            <li><strong>Maximum Employment:</strong> Fostering labor market health and economic growth.</li>
+            <li><strong>Financial System Stability:</strong> Regulating commercial banks and acting as the <em>Lender of Last Resort</em> during panics.</li>
+          </ul>
+        </section>
+
+        <section id="monetary-policy">
+          <h2>6. Monetary Policy Tools</h2>
+          <p>Central banks use three primary levers to steer the economy:</p>
+          <ul>
+            <li><strong>Policy Interest Rate:</strong> The rate banks pay to borrow overnight from the central bank. Raising rates cools borrowing and inflation; lowering rates stimulates spending.</li>
+            <li><strong>Open Market Operations (OMO):</strong> Buying or selling government bonds. Buying bonds injects cash into the banking system; selling bonds absorbs cash.</li>
+            <li><strong>Reserve Requirements:</strong> Altering the percentage of deposits banks must hold in reserve, directly restricting or expanding their lending capacity.</li>
+          </ul>
+        </section>
+
+        <section id="economy-gdp">
+          <h2>7. Macroeconomics & The GDP Equation</h2>
+          <p>To understand why central banks adjust interest rates, we look at national output via the standard <strong>Gross Domestic Product (GDP)</strong> expenditure equation:</p>
+          
+          <div class="formula-box">
+            <h4 style="margin:0 0 10px;color:white;font-size:1rem;">GDP Expenditure Identity</h4>
+            <code>GDP = Consumer Spending (C) + Business Investment (I) + Government Spending (G) + Net Exports (X - M)</code>
+            <p style="margin:12px 0 0;font-size:.9rem;color:#bdc8de;">When interest rates rise, Consumer Spending (C) and Business Investment (I) slow down because loans become expensive.</p>
+          </div>
+        </section>
+
+        <section id="real-life-transmission">
+          <h2>8. Real-Life Transmission: Rate Hikes & Mortgages</h2>
+          <p>When you hear on the news that the Central Bank raised interest rates by 0.50%, how does that affect you? Here is the real-world chain reaction:</p>
+          <div class="callout">
+            <strong>Step-by-Step Transmission:</strong>
+            <ol style="margin:8px 0 0;padding-left:20px;">
+              <li>Central Bank raises its overnight lending rate.</li>
+              <li>Commercial banks immediately face higher costs to borrow money.</li>
+              <li>Banks pass these costs onto consumers by raising mortgage rates, car loans, and credit card APRs.</li>
+              <li>Borrowing becomes costly, so families buy fewer homes and businesses delay building new factories.</li>
+              <li>Cooling demand relieves upward pressure on prices, taming inflation.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Interactive Quiz Section -->
+        <section id="quiz" class="quiz-container">
+          <h2>9. Module 2 Knowledge Check</h2>
+          <p style="margin-bottom:16px;">Test what you've learned about banks, central banks, and monetary policy:</p>
+          
+          <div id="quiz-question">
+            <p style="font-weight:700;font-size:1.05rem;">Question: If the Reserve Requirement Ratio (RRR) is set at 20%, what is the monetary multiplier?</p>
+            <button class="quiz-option" onclick="checkAnswer(false)">A. 2.0x</button>
+            <button class="quiz-option" onclick="checkAnswer(true)">B. 5.0x</button>
+            <button class="quiz-option" onclick="checkAnswer(false)">C. 20.0x</button>
+          </div>
+          <div id="quiz-feedback" style="margin-top:16px;font-weight:700;display:none;"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background:var(--ink);color:white;padding:35px 0;margin-top:50px;">
+    <div class="shell" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div class="brand" style="color:white"><span class="logo" style="background:var(--blue)">↗</span> Market School</div>
+        <p style="color:#bdc8de;margin:8px 0 0;">Financial Markets for FinTech · Module 3 of 16</p>
+      </div>
+      <div>
+        <a href="index.html" style="color:#bdc8de;text-decoration:none;font-weight:600;">← Back to Course Directory</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Interactivity -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dropdown interaction logic
+      const dropdown = document.getElementById('modulesDropdown');
+      const toggleBtn = document.getElementById('dropToggle');
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('active');
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', () => {
+        if (dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Money Multiplier Calculator Logic
+    function calculateMultiplier() {
+      const deposit = parseFloat(document.getElementById('initialDeposit').value) || 0;
+      const rrrPercent = parseFloat(document.getElementById('rrr').value) || 0;
+      
+      if (rrrPercent <= 0) {
+        document.getElementById('multiplierResult').innerText = `Reserve ratio must be greater than 0%`;
+        return;
+      }
+
+      const rrrDecimal = rrrPercent / 100;
+      const multiplier = 1 / rrrDecimal;
+      const totalMoney = deposit * multiplier;
+
+      document.getElementById('multiplierResult').innerText = `Total Money Created: $${totalMoney.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} (Multiplier: ${multiplier.toFixed(1)}x)`;
+    }
+
+    // Quiz Check Logic
+    function checkAnswer(isCorrect) {
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.style.display = 'block';
+      if (isCorrect) {
+        feedback.style.color = 'var(--teal)';
+        feedback.innerText = 'Correct! The money multiplier is calculated as 1 / RRR. With 20% (0.20), 1 / 0.20 equals 5.0x.';
+      } else {
+        feedback.style.color = '#e11d48';
+        feedback.innerText = 'Incorrect. Remember that the multiplier is 1 divided by the reserve requirement decimal (1 / 0.20 = 5).';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Module 1: Orientation, What Is the Financial System? - Market School FinTech Guide">
+  <title>Module 1: What Is the Financial System? — Market School</title>
+  
+  <!-- Tailwind CSS CDN for utility-first responsive styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Design Tokens matching Market School theme -->
+  <style>
+    :root {
+      --ink: #17233b;
+      --muted: #61708a;
+      --paper: #f6f8fc;
+      --card: #ffffff;
+      --line: #e1e7f0;
+      --blue: #3458e8;
+      --teal: #14a58b;
+      --gold: #f4bd4f;
+      --purple: #7957d5;
+      --shadow: 0 12px 35px #1b31520d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* Container shell for responsive centering */
+    .shell {
+      max-width: 1140px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    /* Topbar Navigation */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #ffffffed;
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      font-size: 1.12rem;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 19px;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .navlinks a, .drop-toggle {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 650;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .navlinks a:hover, .drop-toggle:hover {
+      color: var(--blue);
+    }
+
+    /* Dropdown Menu for 16 Modules */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 280px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      z-index: 100;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 8px 12px;
+      color: var(--ink);
+      font-size: .88rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Module Header Hero */
+    .module-hero {
+      background: radial-gradient(ellipse at 85% 10%, #dce4ff 0, transparent 36%), radial-gradient(ellipse at 0 80%, #d8f5ed 0, transparent 32%);
+      padding: 50px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* Content Layout Styling */
+    .content-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 36px;
+      padding: 40px 0;
+    }
+
+    /* Sidebar Table of Contents */
+    .toc {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc h4 {
+      margin: 0 0 12px;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      display: block;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    .toc a:hover, .toc a.active {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Article Main Body */
+    .article-body {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .article-body h2 {
+      font-size: 1.8rem;
+      letter-spacing: -.03em;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .article-body h3 {
+      font-size: 1.25rem;
+      margin-top: 24px;
+      color: var(--ink);
+    }
+
+    .article-body p {
+      color: #3b475e;
+      line-height: 1.7;
+    }
+
+    /* Callout & Interactive Cards */
+    .callout {
+      background: #f6f8fc;
+      border-left: 4px solid var(--blue);
+      padding: 18px 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+    }
+
+    .formula-box {
+      background: #17233b;
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin: 24px 0;
+    }
+
+    .formula-box code {
+      background: #253556;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #79f7d5;
+    }
+
+    /* Interactive Calculator Styling */
+    .calc-card {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .calc-input {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .calc-input label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .calc-input input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .calc-result {
+      background: #edf0ff;
+      border-radius: 10px;
+      padding: 14px;
+      font-weight: 700;
+      color: var(--blue);
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Quiz Styling */
+    .quiz-container {
+      background: #fdfefe;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 30px;
+    }
+
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--blue);
+      background: #f6f8fc;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .content-layout {
+        grid-template-columns: 1fr;
+      }
+      .toc {
+        display: none;
+      }
+      .calc-input {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar with 16 Modules Dropdown -->
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html">
+        <span class="logo">↗</span> Market School
+      </a>
+      
+      <nav class="navlinks" id="navlinks">
+        <a href="index.html">Home</a>
+        
+        <!-- Modules Dropdown Menu -->
+        <div class="dropdown" id="modulesDropdown">
+          <button class="drop-toggle" id="dropToggle" aria-expanded="false">
+            Modules (16) ▾
+          </button>
+          <div class="dropdown-content">
+            <a href="module-1.html">1. Money, Interest & Time Value</a>
+            <a href="module-2.html">2. Banks & Central Banking</a>
+            <a href="module-3.html">3. Market Structure & Trading</a>
+            <a href="module-4.html">4. Equity Markets & Stocks</a>
+            <a href="module-5.html">5. Fixed Income & Bonds</a>
+            <a href="module-6.html">6. Foreign Exchange (Forex)</a>
+            <a href="module-7.html">7. Commodities & Energy</a>
+            <a href="module-8.html">8. Derivatives & Options</a>
+            <a href="module-9.html">9. Portfolio Theory</a>
+            <a href="module-10.html">10. Company Valuation</a>
+            <a href="module-11.html">11. Behavioral Finance</a>
+            <a href="module-12.html">12. Digital Payments & FinTech</a>
+            <a href="module-13.html">13. Blockchain & Web3</a>
+            <a href="module-14.html">14. Decentralized Finance (DeFi)</a>
+            <a href="module-15.html">15. Market Data & APIs</a>
+            <a href="module-16.html">16. Algorithmic Trading</a>
+          </div>
+        </div>
+        
+        <a href="index.html#all-modules">Course Directory</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header Section -->
+  <section class="module-hero">
+    <div class="shell">
+      <div style="color:var(--blue);text-transform:uppercase;font-weight:800;font-size:.78rem;letter-spacing:.12em;">Module 1 · Foundation</div>
+      <h1 style="font-size:clamp(2rem, 4vw, 3.2rem);margin:10px 0;letter-spacing:-.04em;">Orientation: What Is the Financial System?</h1>
+      <p style="font-size:1.08rem;color:var(--muted);max-width:700px;margin:0;">Why does finance exist? Learn how savers and borrowers get matched, what "the market" actually is, and the core players moving funds across the global economy.</p>
+    </div>
+  </section>
+
+  <!-- Main Content Layout with Sidebar TOC and Article Body -->
+  <div class="shell">
+    <div class="content-layout">
+      
+      <!-- Sidebar Table of Contents -->
+      <aside class="toc">
+        <h4>Table of Contents</h4>
+        <ul>
+          <li><a href="#why-finance" class="toc-link">1. Why Finance Exists</a></li>
+          <li><a href="#vocab" class="toc-link">2. Key Vocabulary</a></li>
+          <li><a href="#system-structure" class="toc-link">3. Structure of the System</a></li>
+          <li><a href="#savers-borrowers" class="toc-link">4. Savers & Borrowers</a></li>
+          <li><a href="#intermediaries" class="toc-link">5. Financial Intermediaries</a></li>
+          <li><a href="#assets" class="toc-link">6. Financial Assets & Liquidity</a></li>
+          <li><a href="#risk-return" class="toc-link">7. Risk & Return Trade-off</a></li>
+          <li><a href="#stakeholders" class="toc-link">8. Stakeholders</a></li>
+          <li><a href="#quiz" class="toc-link">9. Module Quiz</a></li>
+        </ul>
+      </aside>
+
+      <!-- Article Content -->
+      <main class="article-body">
+        
+        <section id="why-finance">
+          <h2>1. Why Finance Exists</h2>
+          <p>At its core, finance solves a fundamental mismatch in society: <strong>Some people and institutions have excess money (surplus), while others have productive ideas or urgent needs but lack cash (deficit).</strong></p>
+          <p>Without a financial system, a local entrepreneur who wants to build a factory would have to personally track down thousands of individual savers with spare cash. The financial system acts as the ultimate bridge, matching surplus capital with productive demand efficiently, securely, and at scale.</p>
+          <div class="callout">
+            <strong>Real-Life Example:</strong> When you deposit €100 into a savings account, you are acting as a saver. The bank pools your money with thousands of others and lends it to a family buying a home or a startup creating new green energy jobs.
+          </div>
+        </section>
+
+        <section id="vocab">
+          <h2>2. Key Vocabulary</h2>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:.92rem;">
+              <thead>
+                <tr style="background:#f6f8fc;text-align:left;border-bottom:2px solid var(--line);">
+                  <th style="padding:12px;">Term</th>
+                  <th style="padding:12px;">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Financial system</td>
+                  <td style="padding:12px;color:var(--muted);">The network of institutions, markets and rules that moves money from those who have spare to those who need it.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Saver / Investor</td>
+                  <td style="padding:12px;color:var(--muted);">Someone with surplus money who wants it to grow.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Borrower / Issuer</td>
+                  <td style="padding:12px;color:var(--muted);">A person, company or government that needs money now.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Financial intermediary</td>
+                  <td style="padding:12px;color:var(--muted);">A go-between, such as a bank or mutual fund, that connects savers and borrowers.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Financial asset / security</td>
+                  <td style="padding:12px;color:var(--muted);">A tradable claim on future cash flows (e.g., stocks, bonds).</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Liquidity</td>
+                  <td style="padding:12px;color:var(--muted);">How quickly an asset can be converted into cash without losing value.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Risk-return trade-off</td>
+                  <td style="padding:12px;color:var(--muted);">Higher potential return usually comes with higher risk of loss.</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;font-weight:700;">Buy-side vs. Sell-side</td>
+                  <td style="padding:12px;color:var(--muted);">Buy-side invests money (asset managers); sell-side sells services and products (investment banks, brokers).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="system-structure">
+          <h2>3. Structure of the Financial System</h2>
+          <p>A robust financial system relies on four foundational pillars:</p>
+          <ul>
+            <li><strong>Institutions:</strong> Commercial banks, credit unions, and insurance companies.</li>
+            <li><strong>Markets:</strong> Stock exchanges (like NYSE or NASDAQ) and bond markets.</li>
+            <li><strong>Instruments:</strong> Stocks, bonds, loans, and derivatives.</li>
+            <li><strong>Regulators:</strong> Central banks (e.g., ECB, Federal Reserve) enforcing monetary rules and stability.</li>
+          </ul>
+        </section>
+
+        <section id="savers-borrowers">
+          <h2>4. Savers & Borrowers (Future Value Math)</h2>
+          <p>When money is lent or invested, it grows over time based on interest rates. The mathematical relationship governing future obligations is:</p>
+          
+          <div class="formula-box">
+            <h4 style="margin:0 0 10px;color:white;font-size:1rem;">Future Value Formula</h4>
+            <code>Future Value = Principal × (1 + Interest Rate)<sup>t</sup></code>
+            <p style="margin:12px 0 0;font-size:.9rem;color:#bdc8de;">Where <em>t</em> is time periods (usually years).</p>
+          </div>
+
+          <!-- Interactive Calculator for Future Value -->
+          <div class="calc-card">
+            <h4 style="margin:0 0 14px;">Interactive Bond Future Value Calculator</h4>
+            <div class="calc-input">
+              <div>
+                <label>Principal Amount (€)</label>
+                <input type="number" id="principal" value="1000" oninput="calculateFV()">
+              </div>
+              <div>
+                <label>Annual Interest Rate (%)</label>
+                <input type="number" id="rate" value="5" step="0.1" oninput="calculateFV()">
+              </div>
+            </div>
+            <div class="calc-result" id="fvResult">
+              Future Value after 1 Year: €1,050.00
+            </div>
+          </div>
+        </section>
+
+        <section id="intermediaries">
+          <h2>5. What Is a Financial Intermediary?</h2>
+          <p>Instead of individuals searching for borrowers directly, intermediaries pool funds and manage risk:</p>
+          <ul>
+            <li><strong>Commercial Banks:</strong> Take deposits from savers and issue mortgages or business loans.</li>
+            <li><strong>Mutual Funds:</strong> Pool investors' money to buy diversified stock and bond portfolios.</li>
+            <li><strong>Insurance Companies:</strong> Collect premiums and invest reserves until claims are filed.</li>
+            <li><strong>Pension Funds:</strong> Gather employee retirement contributions for long-term compounding.</li>
+          </ul>
+        </section>
+
+        <section id="assets">
+          <h2>6. Financial Assets & Liquidity</h2>
+          <p>A financial asset is a non-physical asset whose value stems from a contractual claim or ownership right. Unlike a physical car or house, it represents a legal promise of future cash flows.</p>
+          <div class="callout">
+            <strong>Liquidity Spectrum:</strong>
+            <ul style="margin:8px 0 0;padding-left:20px;">
+              <li><strong>High:</strong> Cash, savings accounts (instant access).</li>
+              <li><strong>Medium:</strong> Public stocks and bonds (sold in seconds on exchanges, but settlement takes days).</li>
+              <li><strong>Low:</strong> Real estate, private equity, physical art (takes months to convert to cash at fair market value).</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="risk-return">
+          <h2>7. Risk & The Risk-Return Trade-Off</h2>
+          <p>Investors demand higher expected compensation when taking on higher uncertainty. This trade-off is often evaluated using the <strong>Sharpe Ratio</strong>:</p>
+          <div class="formula-box">
+            <code>Sharpe Ratio = (Expected Return – Risk-Free Rate) / Standard Deviation (Risk)</code>
+          </div>
+        </section>
+
+        <section id="stakeholders">
+          <h2>8. Stakeholders in Finance</h2>
+          <p>Financial decisions impact multiple groups:</p>
+          <ul>
+            <li><strong>Internal Stakeholders:</strong> Employees, executives, and owners directly tied to operations.</li>
+            <li><strong>External Stakeholders:</strong> Customers, suppliers, regulators, and society impacted by market outcomes.</li>
+          </ul>
+        </section>
+
+        <!-- Interactive Quiz Section -->
+        <section id="quiz" class="quiz-container">
+          <h2>9. Module 1 Knowledge Check</h2>
+          <p style="margin-bottom:16px;">Test what you've learned about the financial system:</p>
+          
+          <div id="quiz-question">
+            <p style="font-weight:700;font-size:1.05rem;">Question: What is the primary role of a financial intermediary?</p>
+            <button class="quiz-option" onclick="checkAnswer(false)">A. To print currency and set monetary inflation rules</button>
+            <button class="quiz-option" onclick="checkAnswer(true)">B. To connect savers with surplus funds to borrowers who need capital</button>
+            <button class="quiz-option" onclick="checkAnswer(false)">C. To eliminate all investment risk in stock markets</button>
+          </div>
+          <div id="quiz-feedback" style="margin-top:16px;font-weight:700;display:none;"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background:var(--ink);color:white;padding:35px 0;margin-top:50px;">
+    <div class="shell" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div class="brand" style="color:white"><span class="logo" style="background:var(--blue)">↗</span> Market School</div>
+        <p style="color:#bdc8de;margin:8px 0 0;">Financial Markets for FinTech · Module 1 of 16</p>
+      </div>
+      <div>
+        <a href="index.html" style="color:#bdc8de;text-decoration:none;font-weight:600;">← Back to Course Directory</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Interactivity -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dropdown interaction logic
+      const dropdown = document.getElementById('modulesDropdown');
+      const toggleBtn = document.getElementById('dropToggle');
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('active');
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', () => {
+        if (dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Future Value Calculator Logic
+    function calculateFV() {
+      const p = parseFloat(document.getElementById('principal').value) || 0;
+      const r = parseFloat(document.getElementById('rate').value) || 0;
+      const fv = p * Math.pow(1 + (r / 100), 1);
+      document.getElementById('fvResult').innerText = `Future Value after 1 Year: €${fv.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    }
+
+    // Quiz Check Logic
+    function checkAnswer(isCorrect) {
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.style.display = 'block';
+      if (isCorrect) {
+        feedback.style.color = 'var(--teal)';
+        feedback.innerText = 'Correct! Intermediaries like banks and funds bridge the gap between savers and borrowers efficiently.';
+      } else {
+        feedback.style.color = '#e11d48';
+        feedback.innerText = 'Incorrect. Try reviewing Section 4 on Financial Intermediaries!';
+      }
+    }
+  </script>
+</body>
+</html>

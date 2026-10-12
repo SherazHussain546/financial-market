@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Module 2: Money, Interest and the Time Value of Money - Market School FinTech Guide">
+  <title>Module 2: Money, Interest and the Time Value of Money — Market School</title>
+  
+  <!-- Tailwind CSS CDN for utility-first responsive styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Design Tokens matching Market School theme -->
+  <style>
+    :root {
+      --ink: #17233b;
+      --muted: #61708a;
+      --paper: #f6f8fc;
+      --card: #ffffff;
+      --line: #e1e7f0;
+      --blue: #3458e8;
+      --teal: #14a58b;
+      --gold: #f4bd4f;
+      --purple: #7957d5;
+      --shadow: 0 12px 35px #1b31520d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* Container shell for responsive centering */
+    .shell {
+      max-width: 1140px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    /* Topbar Navigation */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #ffffffed;
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      font-size: 1.12rem;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 19px;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .navlinks a, .drop-toggle {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 650;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .navlinks a:hover, .drop-toggle:hover {
+      color: var(--blue);
+    }
+
+    /* Dropdown Menu for 16 Modules */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 280px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      z-index: 100;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 8px 12px;
+      color: var(--ink);
+      font-size: .88rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Module Header Hero */
+    .module-hero {
+      background: radial-gradient(ellipse at 85% 10%, #dce4ff 0, transparent 36%), radial-gradient(ellipse at 0 80%, #d8f5ed 0, transparent 32%);
+      padding: 50px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* Content Layout Styling */
+    .content-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 36px;
+      padding: 40px 0;
+    }
+
+    /* Sidebar Table of Contents */
+    .toc {
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc h4 {
+      margin: 0 0 12px;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      display: block;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    .toc a:hover, .toc a.active {
+      background: #edf0ff;
+      color: var(--blue);
+    }
+
+    /* Article Main Body */
+    .article-body {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .article-body h2 {
+      font-size: 1.8rem;
+      letter-spacing: -.03em;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .article-body h3 {
+      font-size: 1.25rem;
+      margin-top: 24px;
+      color: var(--ink);
+    }
+
+    .article-body p {
+      color: #3b475e;
+      line-height: 1.7;
+    }
+
+    /* Callout & Interactive Cards */
+    .callout {
+      background: #f6f8fc;
+      border-left: 4px solid var(--blue);
+      padding: 18px 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+    }
+
+    .formula-box {
+      background: #17233b;
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin: 24px 0;
+    }
+
+    .formula-box code {
+      background: #253556;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #79f7d5;
+    }
+
+    /* Interactive Calculator Styling */
+    .calc-card {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .calc-input {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .calc-input label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .calc-input input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .calc-result {
+      background: #edf0ff;
+      border-radius: 10px;
+      padding: 14px;
+      font-weight: 700;
+      color: var(--blue);
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* Quiz Styling */
+    .quiz-container {
+      background: #fdfefe;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 30px;
+    }
+
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-weight: 600;
+      transition: all .2s;
+      cursor: pointer;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--blue);
+      background: #f6f8fc;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .content-layout {
+        grid-template-columns: 1fr;
+      }
+      .toc {
+        display: none;
+      }
+      .calc-input {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar with 16 Modules Dropdown -->
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="index.html">
+        <span class="logo">↗</span> Market School
+      </a>
+      
+      <nav class="navlinks" id="navlinks">
+        <a href="index.html">Home</a>
+        
+        <!-- Modules Dropdown Menu -->
+        <div class="dropdown" id="modulesDropdown">
+          <button class="drop-toggle" id="dropToggle" aria-expanded="false">
+            Modules (16) ▾
+          </button>
+          <div class="dropdown-content">
+            <a href="module-1.html">1. Money, Interest & Time Value (Intro)</a>
+            <a href="module-2.html">2. Money, Interest & Time Value (TVM)</a>
+            <a href="module-3.html">3. Banks, Central Banks & Economy</a>
+            <a href="module-4.html">4. Market Structure & Trading</a>
+            <a href="module-5.html">5. Equity Markets & Stocks</a>
+            <a href="module-6.html">6. Fixed Income & Bonds</a>
+            <a href="module-7.html">7. Foreign Exchange (Forex)</a>
+            <a href="module-8.html">8. Commodities & Energy</a>
+            <a href="module-9.html">9. Derivatives & Options</a>
+            <a href="module-10.html">10. Portfolio Theory</a>
+            <a href="module-11.html">11. Company Valuation</a>
+            <a href="module-12.html">12. Behavioral Finance</a>
+            <a href="module-13.html">13. Digital Payments & FinTech</a>
+            <a href="module-14.html">14. Blockchain & Web3</a>
+            <a href="module-15.html">15. Market Data & APIs</a>
+            <a href="module-16.html">16. Algorithmic Trading</a>
+          </div>
+        </div>
+        
+        <a href="index.html#all-modules">Course Directory</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header Section -->
+  <section class="module-hero">
+    <div class="shell">
+      <div style="color:var(--blue);text-transform:uppercase;font-weight:800;font-size:.78rem;letter-spacing:.12em;">Module 2 · Foundation & Time Value</div>
+      <h1 style="font-size:clamp(2rem, 4vw, 3.2rem);margin:10px 0;letter-spacing:-.04em;">Money, Interest and the Time Value of Money</h1>
+      <p style="font-size:1.08rem;color:var(--muted);max-width:700px;margin:0;">Why is £100 today worth more than £100 next year? Master interest, compounding, discounting, inflation, and the foundational mathematics behind all financial decisions.</p>
+    </div>
+  </section>
+
+  <!-- Main Content Layout with Sidebar TOC and Article Body -->
+  <div class="shell">
+    <div class="content-layout">
+      
+      <!-- Sidebar Table of Contents -->
+      <aside class="toc">
+        <h4>Table of Contents</h4>
+        <ul>
+          <li><a href="#why-time-value" class="toc-link">1. Why £100 Today Matters</a></li>
+          <li><a href="#vocab" class="toc-link">2. Vocabulary Glossary</a></li>
+          <li><a href="#simple-compound" class="toc-link">3. Simple vs. Compound Interest</a></li>
+          <li><a href="#pv-fv" class="toc-link">4. Present & Future Value Math</a></li>
+          <li><a href="#calculator" class="toc-link">5. Interactive TVM Calculator</a></li>
+          <li><a href="#npv-irr" class="toc-link">6. NPV & IRR Decisions</a></li>
+          <li><a href="#inflation-fisher" class="toc-link">7. Inflation & Fisher Equation</a></li>
+          <li><a href="#apr-apy" class="toc-link">8. APR vs. APY (EAR)</a></li>
+          <li><a href="#quiz" class="toc-link">9. Module Quiz</a></li>
+        </ul>
+      </aside>
+
+      <!-- Article Content -->
+      <main class="article-body">
+        
+        <!-- Section 1 -->
+        <section id="why-time-value">
+          <h2>1. Why is £100 today worth more than £100 next year?</h2>
+          <p>If someone offers you £100 right now or £100 exactly 12 months from now, you should always take the £100 today. This core economic principle is known as the <strong>Time Value of Money (TVM)</strong>. It is driven by three powerful forces:</p>
+          <ul>
+            <li><strong>Opportunity Cost:</strong> If you have £100 today, you can deposit it in a savings account or invest it to earn interest, meaning it will grow to be more than £100 next year.</li>
+            <li><strong>Inflation:</strong> Prices generally rise over time, so £100 will buy fewer goods and services in the future than it does today.</li>
+            <li><strong>Risk and Uncertainty:</strong> A promise of future money carries the risk that the borrower might default or that circumstances might change. Cash in hand is certain.</li>
+          </ul>
+          <div class="callout">
+            <strong>Real-Life Analogy:</strong> Think of a smartphone. If you buy it today, you enjoy using it for an entire year. If you wait a year to buy it with the same £100, inflation might have driven the smartphone's price up to £108, or you missed out on earning 5% interest in the bank.
+          </div>
+        </section>
+
+        <!-- Section 2: Vocabulary Table -->
+        <section id="vocab">
+          <h2>2. Complete Vocabulary Glossary (17 Terms)</h2>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:.92rem;">
+              <thead>
+                <tr style="background:#f6f8fc;text-align:left;border-bottom:2px solid var(--line);">
+                  <th style="padding:12px;">Term</th>
+                  <th style="padding:12px;">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Interest</td>
+                  <td style="padding:12px;color:var(--muted);">The price of borrowing money or the reward for lending it.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Interest rate</td>
+                  <td style="padding:12px;color:var(--muted);">Interest expressed as a percentage per period.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Simple vs. compound interest</td>
+                  <td style="padding:12px;color:var(--muted);">Interest on the original amount only vs. interest on the amount plus past interest ("interest on interest").</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Principal</td>
+                  <td style="padding:12px;color:var(--muted);">The original amount borrowed or invested.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Present value (PV)</td>
+                  <td style="padding:12px;color:var(--muted);">What a future sum is worth today.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Future value (FV)</td>
+                  <td style="padding:12px;color:var(--muted);">What a sum today will be worth later.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Discount rate</td>
+                  <td style="padding:12px;color:var(--muted);">The rate used to convert future money into today's money.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Net present value (NPV)</td>
+                  <td style="padding:12px;color:var(--muted);">The sum of discounted future cash flows minus initial cost; positive NPV creates value.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Internal rate of return (IRR)</td>
+                  <td style="padding:12px;color:var(--muted);">The discount rate at which NPV equals zero.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Annuity</td>
+                  <td style="padding:12px;color:var(--muted);">A fixed payment at regular intervals.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Perpetuity</td>
+                  <td style="padding:12px;color:var(--muted);">An annuity that never ends.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Inflation</td>
+                  <td style="padding:12px;color:var(--muted);">The general rise in prices, which reduces purchasing power.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Real vs. nominal rate</td>
+                  <td style="padding:12px;color:var(--muted);">Real is adjusted for inflation; nominal is the headline rate.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Opportunity cost</td>
+                  <td style="padding:12px;color:var(--muted);">The value of the best alternative you give up.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Yield</td>
+                  <td style="padding:12px;color:var(--muted);">Income return on an investment, as a percentage of price.</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--line);">
+                  <td style="padding:12px;font-weight:700;">Basis point (bp)</td>
+                  <td style="padding:12px;color:var(--muted);">0.01%; 100 bps = 1%.</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;font-weight:700;">APR / APY (EAR)</td>
+                  <td style="padding:12px;color:var(--muted);">Annual percentage rate (without compounding) vs. annual percentage yield (with compounding).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 3: Simple vs Compound -->
+        <section id="simple-compound">
+          <h2>3. Simple vs. Compound Interest</h2>
+          <p><strong>Simple interest</strong> calculates earnings only on the original principal amount. If you invest £1,000 at 5% simple interest for 3 years, you earn £50 each year (£150 total).</p>
+          <p><strong>Compound interest</strong> calculates earnings on the principal <em>plus</em> all accumulated past interest ("interest on interest"). In year 2, you earn interest on £1,050, accelerating your wealth exponentially over time.</p>
+        </section>
+
+        <!-- Section 4: Formulas -->
+        <section id="pv-fv">
+          <h2>4. Core Mathematical Formulas</h2>
+          <div class="formula-box">
+            <h4 style="margin:0 0 10px;color:white;font-size:1rem;">Future Value (FV)</h4>
+            <code>FV = PV × (1 + r)<sup>t</sup></code>
+            <p style="margin:8px 0 0;font-size:.88rem;color:#bdc8de;">Where PV is Present Value, r is interest rate per period, and t is number of periods.</p>
+          </div>
+
+          <div class="formula-box">
+            <h4 style="margin:0 0 10px;color:white;font-size:1rem;">Present Value (PV) / Discounting</h4>
+            <code>PV = FV / (1 + r)<sup>t</sup></code>
+            <p style="margin:8px 0 0;font-size:.88rem;color:#bdc8de;">Brings a future cash flow back to today's value using the discount rate r.</p>
+          </div>
+        </section>
+
+        <!-- Section 5: Interactive Calculator -->
+        <section id="calculator">
+          <h2>5. Interactive Time Value of Money (TVM) Calculator</h2>
+          <div class="calc-card">
+            <h4 style="margin:0 0 14px;">Calculate Future Value & Present Value</h4>
+            <div class="calc-input">
+              <div>
+                <label>Principal / Present Value (£)</label>
+                <input type="number" id="tvmPV" value="1000" oninput="calculateTVM()">
+              </div>
+              <div>
+                <label>Annual Interest Rate (%)</label>
+                <input type="number" id="tvmRate" value="5" step="0.1" oninput="calculateTVM()">
+              </div>
+            </div>
+            <div class="calc-input">
+              <div>
+                <label>Time Period (Years)</label>
+                <input type="number" id="tvmTime" value="5" step="1" oninput="calculateTVM()">
+              </div>
+              <div>
+                <label>Compounding Frequency (per year)</label>
+                <input type="number" id="tvmFreq" value="1" step="1" oninput="calculateTVM()">
+              </div>
+            </div>
+            <div class="calc-result" id="tvmResult">
+              Future Value: £1,276.28 (Total Interest Earned: £276.28)
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: NPV & IRR -->
+        <section id="npv-irr">
+          <h2>6. Net Present Value (NPV) & Internal Rate of Return (IRR)</h2>
+          <p>When businesses evaluate projects or investments, they look at <strong>Net Present Value (NPV)</strong>:</p>
+          <div class="formula-box">
+            <code>NPV = &sum; [ Cash Flow<sub>t</sub> / (1 + r)<sup>t</sup> ] - Initial Investment</code>
+          </div>
+          <p>If NPV is positive, the project adds value and should be accepted. The <strong>Internal Rate of Return (IRR)</strong> is the specific discount rate that forces NPV to exactly zero.</p>
+        </section>
+
+        <!-- Section 7: Inflation & Fisher Equation -->
+        <section id="inflation-fisher" class="callout">
+          <strong>The Fisher Equation (Real vs. Nominal Rates):</strong>
+          <p style="margin:8px 0 0;">Nominal interest rates include inflation, whereas real rates reflect actual purchasing power growth.</p>
+          <code style="display:block;background:#17233b;color:#79f7d5;padding:10px;border-radius:8px;margin-top:10px;">1 + Nominal Rate = (1 + Real Rate) × (1 + Inflation Rate)</code>
+        </section>
+
+        <!-- Section 8: APR vs APY -->
+        <section id="apr-apy">
+          <h2>8. APR vs. APY (Effective Annual Rate)</h2>
+          <p><strong>APR</strong> is the simple annual rate without compounding. <strong>APY (or EAR)</strong> accounts for compounding frequency within the year:</p>
+          <div class="formula-box">
+            <code>APY = (1 + r / n)<sup>n</sup> - 1</code>
+            <p style="margin:8px 0 0;font-size:.88rem;color:#bdc8de;">Where r is stated annual rate and n is compounding periods per year.</p>
+          </div>
+        </section>
+
+        <!-- Section 9: Quiz -->
+        <section id="quiz" class="quiz-container">
+          <h2>9. Module 2 Knowledge Check</h2>
+          <p style="margin-bottom:16px;">Test your understanding of the Time Value of Money:</p>
+          
+          <div id="quiz-question">
+            <p style="font-weight:700;font-size:1.05rem;">Question: If you invest £1,000 at 10% compound interest annually for 2 years, what is your future value?</p>
+            <button class="quiz-option" onclick="checkAnswer(false)">A. £1,200.00</button>
+            <button class="quiz-option" onclick="checkAnswer(true)">B. £1,210.00</button>
+            <button class="quiz-option" onclick="checkAnswer(false)">C. £1,100.00</button>
+          </div>
+          <div id="quiz-feedback" style="margin-top:16px;font-weight:700;display:none;"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="background:var(--ink);color:white;padding:35px 0;margin-top:50px;">
+    <div class="shell" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div class="brand" style="color:white"><span class="logo" style="background:var(--blue)">↗</span> Market School</div>
+        <p style="color:#bdc8de;margin:8px 0 0;">Financial Markets for FinTech · Module 2 of 16</p>
+      </div>
+      <div>
+        <a href="index.html" style="color:#bdc8de;text-decoration:none;font-weight:600;">← Back to Course Directory</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Dropdown & TVM Calculator -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dropdown menu toggle logic
+      const dropdown = document.getElementById('modulesDropdown');
+      const toggleBtn = document.getElementById('dropToggle');
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('active');
+        toggleBtn.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', () => {
+        if (dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // TVM Calculator Logic
+    function calculateTVM() {
+      const pv = parseFloat(document.getElementById('tvmPV').value) || 0;
+      const r = (parseFloat(document.getElementById('tvmRate').value) || 0) / 100;
+      const t = parseFloat(document.getElementById('tvmTime').value) || 0;
+      const n = parseFloat(document.getElementById('tvmFreq').value) || 1;
+
+      // Compound interest formula: FV = PV * (1 + r/n)^(n*t)
+      const fv = pv * Math.pow(1 + (r / n), n * t);
+      const interestEarned = fv - pv;
+
+      document.getElementById('tvmResult').innerText = `Future Value: £${fv.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} (Total Interest Earned: £${interestEarned.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
+    }
+
+    // Quiz Check Logic
+    function checkAnswer(isCorrect) {
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.style.display = 'block';
+      if (isCorrect) {
+        feedback.style.color = 'var(--teal)';
+        feedback.innerText = 'Correct! Year 1: £1,000 × 1.10 = £1,100. Year 2: £1,100 × 1.10 = £1,210.00.';
+      } else {
+        feedback.style.color = '#e11d48';
+        feedback.innerText = 'Incorrect. Remember compound interest earns interest on interest (£1,000 × 1.10² = £1,210).';
+      }
+    }
+  </script>
+</body>
+</html>
